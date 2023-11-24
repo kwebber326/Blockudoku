@@ -1,0 +1,11 @@
+C:\Users\kjw2\source\repos\Blockudoku\Blockudoku.Framework\bin\Debug\netstandard2.0\Blockudoku.Framework.deps.json
+C:\Users\kjw2\source\repos\Blockudoku\Blockudoku.Framework\bin\Debug\netstandard2.0\Blockudoku.Framework.dll
+C:\Users\kjw2\source\repos\Blockudoku\Blockudoku.Framework\bin\Debug\netstandard2.0\Blockudoku.Framework.pdb
+C:\Users\kjw2\source\repos\Blockudoku\Blockudoku.Framework\obj\Debug\netstandard2.0\Blockudoku.Framework.csprojAssemblyReference.cache
+C:\Users\kjw2\source\repos\Blockudoku\Blockudoku.Framework\obj\Debug\netstandard2.0\Blockudoku.Framework.Properties.Resources.resources
+C:\Users\kjw2\source\repos\Blockudoku\Blockudoku.Framework\obj\Debug\netstandard2.0\Blockudoku.Framework.csproj.GenerateResource.cache
+C:\Users\kjw2\source\repos\Blockudoku\Blockudoku.Framework\obj\Debug\netstandard2.0\Blockudoku.Framework.csproj.CoreCompileInputs.cache
+C:\Users\kjw2\source\repos\Blockudoku\Blockudoku.Framework\obj\Debug\netstandard2.0\Blockudoku.Framework.AssemblyInfoInputs.cache
+C:\Users\kjw2\source\repos\Blockudoku\Blockudoku.Framework\obj\Debug\netstandard2.0\Blockudoku.Framework.AssemblyInfo.cs
+C:\Users\kjw2\source\repos\Blockudoku\Blockudoku.Framework\obj\Debug\netstandard2.0\Blockudoku.Framework.dll
+C:\Users\kjw2\source\repos\Blockudoku\Blockudoku.Framework\obj\Debug\netstandard2.0\Blockudoku.Framework.pdb
