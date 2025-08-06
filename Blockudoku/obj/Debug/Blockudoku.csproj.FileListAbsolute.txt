@@ -11,16 +11,3 @@ C:\Users\kjw2\source\repos\Blockudoku\Blockudoku\obj\Debug\Blockudoku.Game.resou
 C:\Users\kjw2\source\repos\Blockudoku\Blockudoku\obj\Debug\Blockudoku.csprojAssemblyReference.cache
 C:\Users\kjw2\source\repos\Blockudoku\Blockudoku\obj\Debug\Blockudoku.UserControls.HighScoreBreakdown.resources
 C:\Users\kjw2\source\repos\Blockudoku\Blockudoku\obj\Debug\Blockudoku.LevelEditor.resources
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\bin\Debug\Blockudoku.exe.config
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\bin\Debug\Blockudoku.exe
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\bin\Debug\Blockudoku.pdb
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\obj\Debug\Blockudoku.csprojAssemblyReference.cache
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\obj\Debug\Blockudoku.Game.resources
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\obj\Debug\Blockudoku.LevelEditor.resources
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\obj\Debug\Blockudoku.MainMenu.resources
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\obj\Debug\Blockudoku.Properties.Resources.resources
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\obj\Debug\Blockudoku.UserControls.HighScoreBreakdown.resources
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\obj\Debug\Blockudoku.csproj.GenerateResource.cache
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\obj\Debug\Blockudoku.csproj.CoreCompileInputs.cache
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\obj\Debug\Blockudoku.exe
-C:\Users\kjw2\Source\Repos\BlockudokuGame\Blockudoku\obj\Debug\Blockudoku.pdb

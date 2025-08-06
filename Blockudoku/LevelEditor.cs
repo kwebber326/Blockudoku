@@ -301,7 +301,6 @@ namespace Blockudoku
             {
                 mapName = LevelEditorFileIOUtility.DEFAULT_MAP_NAME + "_" + incrementExtension;
                 exists = LevelEditorFileIOUtility.MapExists(mapName);
-                incrementExtension++;
             }
             txtMapName.Text = mapName;
         }
