@@ -3,6 +3,7 @@ using Blockudoku.GameObjects.Shapes;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System;
 
 namespace Blockudoku.GameObjects.GameLogicUtilities
 {
@@ -19,13 +20,6 @@ namespace Blockudoku.GameObjects.GameLogicUtilities
 
         public int SingleMatchScore => 18;
 
-        /// <summary>
-        /// Destroyes matches, determines score, and outputs the message for the play
-        /// </summary>
-        /// <param name="gameBoard"></param>
-        /// <param name="currentStreak"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
         public int DestroyMatches(Block[,] gameBoard, ref int currentStreak, out string message)
         {
             //initialize the message
@@ -42,6 +36,20 @@ namespace Blockudoku.GameObjects.GameLogicUtilities
             allBlocks.AddRange(columnBlocks);
             allBlocks.AddRange(squareBlocks);
 
+            // Check for special patterns
+            if (IsHourglassPattern(gameBoard, rowBlocks, columnBlocks, squareBlocks))
+            {
+                message = "Hourglass!";
+            }
+            else if (IsSpinningTopPattern(gameBoard, rowBlocks, columnBlocks, squareBlocks))
+            {
+                message = "Spinning Top!";
+            }
+            else if (IsLollipopPattern(gameBoard, rowBlocks, columnBlocks, squareBlocks))
+            {
+                message = "Lollipop!";
+            }
+
             foreach (var point in allBlocks)
             {
                 if (gameBoard[point.X, point.Y]?.Destroy() ?? false)
@@ -49,11 +57,10 @@ namespace Blockudoku.GameObjects.GameLogicUtilities
                     gameBoard[point.X, point.Y] = null;
                 }
             }
-            
 
             int total = rowsDestroyed + columnsDestroyed + squaresDestroyed;
             //update the message for combos
-            if (total > 1)
+            if (total > 1 && string.IsNullOrEmpty(message))
             {
                 message += $"{total}x Combo!";
             }
@@ -89,6 +96,169 @@ namespace Blockudoku.GameObjects.GameLogicUtilities
                 streakScore = ((currentStreak) * this.StreakIncrement) + this.BasePointsForStreak;
             }
             return comboScore + streakScore;
+        }
+
+        private bool IsHourglassPattern(Block[,] gameBoard, List<Point> rowBlocks, List<Point> columnBlocks, List<Point> squareBlocks)
+        {
+            // Check for two 3x3 squares with one 3x3 section away diagonally
+            var squareCenters = GetSquareCenters(squareBlocks);
+            if (squareCenters.Count < 2) return false;
+
+            foreach (var center1 in squareCenters)
+            {
+                foreach (var center2 in squareCenters)
+                {
+                    if (center1 == center2) continue;
+                    if (Math.Abs(center1.X - center2.X) == 3 && Math.Abs(center1.Y - center2.Y) == 3)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool IsSpinningTopPattern(Block[,] gameBoard, List<Point> rowBlocks, List<Point> columnBlocks, List<Point> squareBlocks)
+        {
+            // Check for a vertical or horizontal line passing through a 3x3 square
+            var squareCenters = GetSquareCenters(squareBlocks);
+            if (squareCenters.Count == 0) return false;
+
+            foreach (var center in squareCenters)
+            {
+                if (IsVerticalLineThroughSquare(gameBoard, center, rowBlocks, columnBlocks))
+                {
+                    return true;
+                }
+                if (IsHorizontalLineThroughSquare(gameBoard, center, rowBlocks, columnBlocks))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool IsLollipopPattern(Block[,] gameBoard, List<Point> rowBlocks, List<Point> columnBlocks, List<Point> squareBlocks)
+        {
+            // Check for a vertical line passing through a 3x3 square at the top
+            var squareCenters = GetSquareCenters(squareBlocks);
+            if (squareCenters.Count == 0) return false;
+
+            foreach (var center in squareCenters)
+            {
+                if (IsVerticalLineThroughSquareAtTop(gameBoard, center, rowBlocks, columnBlocks))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private List<Point> GetSquareCenters(List<Point> squareBlocks)
+        {
+            var squareCenters = new List<Point>();
+            for (int i = 0; i < squareBlocks.Count; i += 9)
+            {
+                squareCenters.Add(new Point(squareBlocks[i].X + 1, squareBlocks[i].Y + 1));
+            }
+            return squareCenters;
+        }
+
+        private bool IsVerticalLineThroughSquare(Block[,] gameBoard, Point squareCenter, List<Point> rowBlocks, List<Point> columnBlocks)
+        {
+            // Check if there is a vertical line passing through the square
+            for (int i = 0; i < gameBoard.GetLength(0); i++)
+            {
+                if (gameBoard[i, squareCenter.Y] != null)
+                {
+                    // Check if the line is centered in the square
+                    if (IsLineCenteredInSquare(gameBoard, i, squareCenter.Y, rowBlocks, columnBlocks))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool IsHorizontalLineThroughSquare(Block[,] gameBoard, Point squareCenter, List<Point> rowBlocks, List<Point> columnBlocks)
+        {
+            // Check if there is a horizontal line passing through the square
+            for (int i = 0; i < gameBoard.GetLength(1); i++)
+            {
+                if (gameBoard[squareCenter.X, i] != null)
+                {
+                    // Check if the line is centered in the square
+                    if (IsLineCenteredInSquare(gameBoard, squareCenter.X, i, rowBlocks, columnBlocks))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool IsVerticalLineThroughSquareAtTop(Block[,] gameBoard, Point squareCenter, List<Point> rowBlocks, List<Point> columnBlocks)
+        {
+            // Check if there is a vertical line passing through the square at the top
+            for (int i = 0; i < gameBoard.GetLength(0); i++)
+            {
+                if (gameBoard[i, squareCenter.Y] != null)
+                {
+                    // Check if the line is centered in the square and at the top
+                    if (IsLineCenteredInSquareAtTop(gameBoard, i, squareCenter.Y, rowBlocks, columnBlocks))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool IsLineCenteredInSquare(Block[,] gameBoard, int x, int y, List<Point> rowBlocks, List<Point> columnBlocks)
+        {
+            // Check if the line is centered in the square
+            int squareSize = 3;
+            int startX = x - (squareSize - 1) / 2;
+            int startY = y - (squareSize - 1) / 2;
+            for (int i = 0; i < squareSize; i++)
+            {
+                for (int j = 0; j < squareSize; j++)
+                {
+                    if (gameBoard[startX + i, startY + j] == null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private bool IsLineCenteredInSquareAtTop(Block[,] gameBoard, int x, int y, List<Point> rowBlocks, List<Point> columnBlocks)
+        {
+            // Check if the line is centered in the square and at the top
+            int squareSize = 3;
+            int startX = x - (squareSize - 1) / 2;
+            int startY = y - (squareSize - 1) / 2;
+            for (int i = 0; i < squareSize; i++)
+            {
+                for (int j = 0; j < squareSize; j++)
+                {
+                    if (gameBoard[startX + i, startY + j] == null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            // Check if the line is at the top
+            for (int i = 0; i < squareSize; i++)
+            {
+                if (gameBoard[startX - 1, startY + i] != null)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         /// <summary>
         /// Destroys any rows and returns the number of rows destroyed

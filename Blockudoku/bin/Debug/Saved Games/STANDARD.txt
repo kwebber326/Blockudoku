@@ -1,0 +1,6 @@
+0
+0
+SmallTBlockRight
+TopRightL3x3
+SmallTBlockRight
+END_INVENTORY
